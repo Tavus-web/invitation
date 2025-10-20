@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merjen's Birthday Celebration</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff6b6b, #ffe66d);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+        .invitation {
+            background-color: transparent; /* Fully transparent, no white background */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 600px;
+            border: 2px solid #ff6b6b;
+        }
+        h1 {
+            color: #d81b60;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8); /* Enhanced for readability */
+        }
+        p {
+            color: #333;
+            font-size: 1.2em;
+            line-height: 1.5;
+            text-shadow: 0 0 3px rgba(255, 255, 255, 0.8); /* Enhanced for readability */
+        }
+        .highlight {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #d81b60;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 1.1em;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #b0003a;
+        }
+        #countdown {
+            font-size: 1.5em;
+            color: #333;
+            margin: 20px 0;
+            font-weight: bold;
+            text-shadow: 0 0 3px rgba(255, 255, 255, 0.8); /* Enhanced for readability */
+        }
+        .rsvp-form {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .rsvp-form label {
+            font-size: 1.1em;
+            margin-right: 10px;
+            color: #333;
+            text-shadow: 0 0 3px rgba(255, 255, 255, 0.8); /* Enhanced for readability */
+        }
+        .rsvp-form input[type="radio"] {
+            margin: 10px;
+        }
+        .rsvp-form input[type="text"] {
+            padding: 8px;
+            margin: 10px 0;
+            width: 100%;
+            border: 1px solid #ff6b6b;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.5); /* Slightly opaque for input readability */
+        }
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .confetti div {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff6b6b;
+            opacity: 0.8;
+            animation: fall 5s linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="confetti" id="confetti"></div>
+    <div class="invitation">
+        <h1>Merjen Durdyyeva's Birthday Bash!</h1>
+        <p>You’re invited to celebrate <span class="highlight">Merjen’s special day</span> with us!</p>
+        <p><strong>Date:</strong> October 25, 2025</p>
+        <p><strong>Time:</strong> 7:00 PM (Turkmenistan Time)</p>
+        <p><strong>Location:</strong> Virtual Party via <a href="https://www.google.is/maps/place/%D0%91%D0%B0%D0%B9%D1%80%D0%B0%D0%BC%D0%B0%D0%BB%D0%B8,+%D0%A2%D1%83%D1%80%D0%BA%D0%BC%D0%B5%D0%BD%D0%B8%D1%81%D1%82%D0%B0%D0%BD/@37.6204342,62.0663983,12z/data=!3m1!4b1!4m6!3m5!1s0x3f4176d3debc7375:0x3e87e3fcbafd3c8a!8m2!3d37.6156855!4d62.1571349!16s%2Fm%2F063zpy0?entry=ttu&g_ep=EgoyMDI1MTAxNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="color: #ff6b6b;">Zoom Link for Bayramaly</a></p>
+        <p>Join us for a festive virtual celebration filled with fun and surprises!</p>
+        <p>Please RSVP by October 23, 2025.</p>
+        <div id="countdown">Countdown to the Party: <span id="timer"></span></div>
+
+        <!-- RSVP Form -->
+        <form class="rsvp-form" action="mailto:https://formspree.io/f/manpznzj" method="post" enctype="text/plain">
+            <p><strong>Can you attend?</strong></p>
+            <label><input type="radio" name="attendance" value="Yes" required> Yes</label>
+            <label><input type="radio" name="attendance" value="No"> No</label>
+            <p><strong>Your Name:</strong></p>
+            <input type="text" name="name" placeholder="Enter your name" required>
+            <br>
+            <button type="submit" class="button">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        // Countdown Timer
+        const eventDate = new Date('October 25, 2025 19:00:00').getTime();
+        const countdown = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('timer').innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            if (distance < 0) {
+                clearInterval(countdown);
+                document.getElementById('timer').innerText = 'The party has started!';
+            }
+        }, 1000);
+
+        // Confetti Animation
+        const confettiContainer = document.getElementById('confetti');
+        for (let i = 0; i < 50; i++) {
+            const confetti = document.createElement('div');
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.background = ['#ff6b6b', '#ffe66d', '#4ecdc4'][Math.floor(Math.random() * 3)];
+            confetti.style.animationDelay = Math.random() * 5 + 's';
+            confettiContainer.appendChild(confetti);
+        }
+    </script>
+</body>
+</html>
